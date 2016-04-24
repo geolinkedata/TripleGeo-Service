@@ -137,7 +137,7 @@ public class TripleGeoService {
    * Submit a configuration script in and execute Deer.
    * 
    * @param configuration string in text/turtle format
-   * @return Response wit a JSON object with the output results
+   * @return Response with a JSON object with the output results
    */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -295,31 +295,35 @@ public class TripleGeoService {
     CloseableHttpClient httpClient = HttpClients.createDefault();
 
     while (it.hasNext()) {
-      String q = it.next();
+        String q = it.next();
+        
+        log.debug("query:" + q);
+        HttpPost proxyMethod = new HttpPost(endpoint);
 
-      log.debug("query:" + q);
-      HttpPost proxyMethod = new HttpPost(endpoint);
+        ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+        postParameters.add(new BasicNameValuePair("query", q));
+        postParameters.add(new BasicNameValuePair("format", "application/sparql-results+json"));
+        // use UTF8!
+        proxyMethod.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
 
-      ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-      postParameters.add(new BasicNameValuePair("query", q));
-      postParameters.add(new BasicNameValuePair("format", "application/sparql-results+json"));
-      proxyMethod.setEntity(new UrlEncodedFormEntity(postParameters));
+        log.info("proxyMethod is:" + proxyMethod.toString());
+        log.info("query parameters is:" + q.toString());
 
-      final CloseableHttpResponse response = httpClient.execute(proxyMethod);
+        final CloseableHttpResponse response = httpClient.execute(proxyMethod);
 
-      BufferedReader in =
-          new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-      String inputLine;
-      while ((inputLine = in.readLine()) != null) {
-        log.debug(inputLine);
-      }
-      in.close();
+        BufferedReader in =
+            new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+          log.debug(inputLine);
+        }
+        in.close();
 
-      if (response.getStatusLine().getStatusCode() != 200) {
-        throw new IOException("Could not insert data: " + endpoint + " "
-            + response.getStatusLine().getReasonPhrase());
-      } else
-        log.debug(response.getStatusLine().toString());
+        if (response.getStatusLine().getStatusCode() != 200) {
+          throw new IOException("Could not insert data: " + endpoint + " "
+              + response.getStatusLine().getReasonPhrase());
+        } else
+          log.debug(response.getStatusLine().toString());
 
     }
     httpClient.close();

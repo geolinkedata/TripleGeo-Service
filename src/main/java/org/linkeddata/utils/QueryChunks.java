@@ -94,8 +94,9 @@ public class QueryChunks {
     String queryString;
     m.write(os, "TURTLE");
     if (graph != "")
-      queryString = " INSERT INTO <" + graph + "> { " + os.toString("UTF-8") + "}";
+      queryString = " INSERT DATA { GRAPH <" + graph + "> { " + os.toString("UTF-8") + "}}";
     else
+      //TODO : check if query for empty string has to be changed
       queryString = "INSERT { " + os.toString("UTF-8") + "}";
     os.close();
     return queryString;
