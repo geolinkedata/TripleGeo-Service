@@ -290,7 +290,7 @@ public class TripleGeoService {
       throws Exception {
     List<String> insertqueries = QueryChunks.generateInsertChunks(graph, model, uriBase);
     Iterator<String> it = insertqueries.iterator();
-    log.info(" into " + graph);
+    log.info("Load data into " + graph);
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -306,8 +306,8 @@ public class TripleGeoService {
         // use UTF8!
         proxyMethod.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
 
-        log.info("proxyMethod is:" + proxyMethod.toString());
-        log.info("query parameters is:" + q.toString());
+        log.debug("proxyMethod is:" + proxyMethod.toString());
+        log.debug("query parameters is:" + q.toString());
 
         final CloseableHttpResponse response = httpClient.execute(proxyMethod);
 
