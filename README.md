@@ -27,26 +27,26 @@ The rest services available are:
 
 The configuration for a new transformation needs the following JSON:
 
-        {
-            "job": "[esri|gml|kml] ",
-            "format": "[RDF/XML|N3|N-TRIPLES]",
-            "targetStore": "[GeoSPARQL|Virtuoso]",
-            "inputFile": "path/to/shape/file.shp",
-            "featureString": "points",
-            "attribute": "osm_id",
-            "ignore": "UNK",
-            "type": "points",
-            "name": "name",
-            "uclass": "type",
-            "nsPrefix": "georesource",
-            "nsURI": "http://geoknow.eu/geodata#",
-            "ontologyNSPrefix": "geo",
-            "ontologyNS": "http://www.opengis.net/ont/geosparql#",
-            "sourceRS": "",
-            "targetRS": "",
-            "defaultLang": "en",
-            "targetEndpoint": "http://localhost:8080/sparql",
-            "targetGraph": "http://example/results"
-        }
+      {
+          "attribute": "osm_id",
+          "defaultLang": "en",
+          "featureString": "points",
+          "format": "RDF/XML",
+          "ignore": "UNK",
+          "inputFile": "/Users/geobart/Development/geolinkedata/orchestrator/test/points.shp",
+          "job": "esri",
+          "name": "name",
+          "nsPrefix": "geobelod",
+          "nsURI": "http://geolinkedata.org/geodata/",
+          "ontologyNS": "http://www.opengis.net/ont/geosparql#",
+          "ontologyNSPrefix": "geo",
+          "sourceRS": "",
+          "targetEndpoint": "http://localhost:8890/sparql",
+          "targetGraph": "http://geolinkedata.org/geodata/",
+          "targetRS": "",
+          "targetStore": "Virtuoso",
+          "type": "osm_points",
+          "uclass": "type"
+      }
         
-For a better description for the parameters check [TripleGeo](https://github.com/GeoKnow/TripleGeo). 
+For a better description for the parameters check [TripleGeo](https://github.com/geolinkedata/TripleGeo). 
