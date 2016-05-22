@@ -2,7 +2,7 @@
 
 A web service for running TripleGeo
 
-##Building
+## Building
 
 Tested in Tomcat7
 
@@ -49,4 +49,18 @@ The configuration for a new transformation needs the following JSON:
           "uclass": "type"
       }
         
-For a better description for the parameters check [TripleGeo](https://github.com/geolinkedata/TripleGeo). 
+For a better description for the parameters check [TripleGeo](https://github.com/geolinkedata/TripleGeo).
+
+## Run in a Docker container
+
+Prepare the environment with docker variable set:
+
+     eval $(docker-machine env default)
+
+Build the container:
+
+     docker build -t francbartoli/triplegeo-service .
+
+Run the container:
+
+     docker run -it --rm -p 8080:8080 francbartoli/triplegeo-service
